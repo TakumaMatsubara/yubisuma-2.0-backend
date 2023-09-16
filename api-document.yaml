@@ -16,8 +16,6 @@ tags:
     description: アクション関連API
 
 paths:
-  /user/create: ... # 既存の/user/createの詳細は省略しています
-
   /animals:
     get:
       tags:
@@ -36,7 +34,7 @@ paths:
                     items:
                       $ref: "#/components/schemas/Animal"
 
-  /my-animal:
+  /animal:
     post:
       tags:
         - animals
@@ -45,7 +43,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/Animal"
+              $ref: "#/components/schemas/AnimalPostRequest"
         required: true
       responses:
         200:
@@ -53,7 +51,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/AnimalResponse"
+                $ref: "#/components/schemas/AnimalPostResponse"
 
   /action:
     post:
@@ -91,6 +89,47 @@ components:
         skill:
           type: string
           description: スキル
+        skillDesc:
+          type: string
+          description: スキルの説明文
+        handUrl:
+          type: string
+          description: 手の画像URL
+        upFingerUrl:
+          type: string
+          description: 上向きの指の画像URL
+        downFingerUrl:
+          type: string
+          description: 下向きの指の画像URL
+
+    AnimalPostRequest:
+      type: object
+      properties:
+        id:
+          type: string
+          description: 動物のIDを選択
+
+    AnimalPostResponse:
+      type: object
+      properties:
+        isPlayer:
+          type: boolean
+          description: プレイヤーかどうか
+        id:
+          type: string
+          description: 動物のID
+        name:
+          type: string
+          description: 動物名
+        numFinger:
+          type: integer
+          description: 指の数
+        skill:
+          type: string
+          description: スキル
+        skillDesc:
+          type: string
+          description: スキルの説明文
         handUrl:
           type: string
           description: 手の画像URL
@@ -118,16 +157,11 @@ components:
           description: 主張する指の数
           nullable: true
 
-    AnimalResponse:
-      type: object
-      properties:
-        message:
-          type: string
-          description: 処理結果のメッセージ
-
     ActionResponse:
       type: object
       properties:
-        message:
-          type: string
-          description: 処理結果のメッセージ
+        isFinished:
+          type: boolean
+          description: ゲームが終了したかどうか
+        isMyTurn:
+         
