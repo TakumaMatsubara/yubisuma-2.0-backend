@@ -1,5 +1,5 @@
 # ベースとなるイメージを指定します
-FROM golang:1.17
+FROM golang:1.20
 
 # GOPROXYを指定して、Goの公式モジュールミラーを使用します（オプション）
 ENV GOPROXY=https://proxy.golang.org,direct

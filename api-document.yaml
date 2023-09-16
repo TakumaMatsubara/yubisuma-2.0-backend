@@ -76,9 +76,47 @@ paths:
 
 components:
   schemas:
-    Animal: ... # Animalの詳細は省略しています
+    Animal:
+      type: object
+      properties:
+        id:
+          type: string
+          description: 動物のID
+        name:
+          type: string
+          description: 動物名
+        numFinger:
+          type: integer
+          description: 指の数
+        skill:
+          type: string
+          description: スキル
+        handUrl:
+          type: string
+          description: 手の画像URL
+        upFingerUrl:
+          type: string
+          description: 上向きの指の画像URL
+        downFingerUrl:
+          type: string
+          description: 下向きの指の画像URL
 
-    Action: ... # Actionの詳細は省略しています
+    Action:
+      type: object
+      properties:
+        isMyTurn:
+          type: boolean
+          description: 私のターンかどうか
+        useSkill:
+          type: boolean
+          description: スキルを使用するかどうか
+        numUpFinger:
+          type: integer
+          description: 上向きの指の数
+        numClaimedFinger:
+          type: integer
+          description: 主張する指の数
+          nullable: true
 
     AnimalResponse:
       type: object

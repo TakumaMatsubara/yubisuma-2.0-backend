@@ -6,7 +6,6 @@ import (
 
 	"github.com/labstack/echo/v4"
 	echomiddleware "github.com/labstack/echo/v4/middleware"
-	"gorm.io/gorm"
 	"yubisuma-2.0/app"
 )
 
@@ -14,7 +13,6 @@ var (
 	// port番号
 	addr string
 )
-var Conn *gorm.DB
 
 func init() {
 

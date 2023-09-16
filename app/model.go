@@ -5,8 +5,6 @@ import (
 	"log"
 	"os"
 
-	"time"
-
 	"github.com/joho/godotenv"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -17,11 +15,10 @@ type Animal struct {
 	Name          string
 	NumFinger     int
 	Skill         string
+	SkillDesc     string
 	HandUrl       string
 	UpFingerUrl   string
 	DownFingerUrl string
-	CreatedAt     time.Time
-	UpdatedAt     time.Time
 }
 
 // app/db.go (新しく作成するファイルもしくはapp内の適当なファイルに追加)
