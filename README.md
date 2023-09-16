@@ -51,7 +51,10 @@ $ docker compose up mysql
 ```
 
 を実行することでローカルの Docker 上に MySQL サーバが起動します。<br>
-<port:3307/>で mysql に接続できます。
+```
+port:3307
+```
+で mysql に接続できます。
 
 <br>
 初回起動時に db/init ディレクトリ内の DDL, DML を読み込みデータベースの初期化を行います。<br>
