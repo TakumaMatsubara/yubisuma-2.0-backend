@@ -6,22 +6,6 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-// Animal response for single animal
-type animalResponse struct {
-	ID            string `json:"id"`
-	Name          string `json:"name"`
-	NumFinger     int    `json:"numFinger"`
-	Skill         string `json:"skill"`
-	HandUrl       string `json:"handUrl"`
-	UpFingerUrl   string `json:"upFingerUrl"`
-	DownFingerUrl string `json:"downFingerUrl"`
-}
-
-// Animals response for list of animals
-type animalsResponse struct {
-	Animals []animalResponse `json:"animals"`
-}
-
 // HandleAnimalsGet handles the GET request for all animals
 func HandleAnimalsGet() echo.HandlerFunc {
 	return func(c echo.Context) error {
@@ -39,19 +23,76 @@ func HandleAnimalsGet() echo.HandlerFunc {
 		}
 
 		// Convert database animals to response format
-		resp := animalsResponse{}
+		resp := animalsGetResponse{}
 		for _, animal := range animals {
 			resp.Animals = append(resp.Animals, animalResponse{
 				ID:            animal.ID,
 				Name:          animal.Name,
 				NumFinger:     animal.NumFinger,
 				Skill:         animal.Skill,
+				SkillDesc:     animal.SkillDesc,
 				HandUrl:       animal.HandUrl,
 				UpFingerUrl:   animal.UpFingerUrl,
 				DownFingerUrl: animal.DownFingerUrl,
 			})
 		}
 
+		return c.JSON(http.StatusOK, resp)
+	}
+}
+
+func HandleAnimalPost() echo.HandlerFunc {
+	return func(c echo.Context) error {
+		var req AnimalPostRequest
+		if err := c.Bind(&req); err != nil {
+			return c.JSON(http.StatusBadRequest, map[string]string{"error": "Invalid request format"})
+		}
+		myAnimal := animalSelectedResponse{
+			IsPlayer:      true,
+			ID:            req.ID,
+			Name:          "Lion",
+			NumFinger:     5,
+			Skill:         "Roar",
+			SkillDesc:     "Powerful Roar",
+			HandUrl:       "http://example.com/lion/hand",
+			UpFingerUrl:   "http://example.com/lion/upfinger",
+			DownFingerUrl: "http://example.com/lion/downfinger",
+		}
+		npcAnimal := animalSelectedResponse{
+			IsPlayer:      false,
+			ID:            "npc_id_123",
+			Name:          "Tiger",
+			NumFinger:     5,
+			Skill:         "Leap",
+			SkillDesc:     "High Leap",
+			HandUrl:       "http://example.com/tiger/hand",
+			UpFingerUrl:   "http://example.com/tiger/upfinger",
+			DownFingerUrl: "http://example.com/tiger/downfinger",
+		}
+		animalPostResp := AnimalPostResponse{
+			MyAnimal:  myAnimal,
+			NpcAnimal: npcAnimal,
+		}
+		return c.JSON(http.StatusOK, animalPostResp)
+	}
+}
+
+func HandleAction() echo.HandlerFunc {
+	return func(c echo.Context) error {
+		var req actionRequest
+		if err := c.Bind(&req); err != nil {
+			return c.JSON(http.StatusBadRequest, map[string]string{"error": "Invalid request format"})
+		}
+		resp := actionResponse{IsFinished: false, // 実際のロジックに基づいて更新
+			IsMyTurn:          req.IsMyTurn,          // ターンを切り替える
+			NumMyFinger:       req.NumMyUpFinger,     // 仮の値
+			NumNpcFinger:      5,                     // 仮の値
+			NumMyUpFinger:     req.NumMyUpFinger,     // リクエストからの値
+			NumNpcUpFinger:    3,                     // 仮の値
+			NumExpectedFinger: req.NumExpectedFinger, // リクエストからの値
+		}
+
+		// レスポンスをJSONとして返す
 		return c.JSON(http.StatusOK, resp)
 	}
 }

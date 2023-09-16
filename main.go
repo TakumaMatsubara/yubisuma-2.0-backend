@@ -36,6 +36,8 @@ func main() {
 	}))
 
 	e.GET("/animals", app.HandleAnimalsGet())
+	e.POST("/animal", app.HandleAnimalPost())
+	e.POST("/action", app.HandleAction())
 
 	log.Println("Server running...")
 	if err := e.Start(addr); err != nil {
