@@ -21,6 +21,20 @@ type Animal struct {
 	DownFingerUrl string
 }
 
+
+// GameState holds the state of the Yubisuma game
+type GameState struct {
+	numMyFinger 	int    
+	numNpcFinger    int
+	mySkill   		string
+	mySkillDesc		string
+	usedMySkill		bool
+	npcSkill		string
+	npcSkillDesc    string
+	usedNpcSkill	bool 
+}
+
+
 // app/db.go (新しく作成するファイルもしくはapp内の適当なファイルに追加)
 
 var db *gorm.DB
