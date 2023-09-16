@@ -100,10 +100,10 @@ func UpdateGameState(numExpectedFinger int, useSkill bool, isMyTurn bool, numMyU
 	isFinished := false
 	if numExpectedFinger == totalFingers {
 		// 指の数を減らし、ゲームが終了したかどうかを判定する
-		if currentState.numMyFinger > 0 and isMyTurn {
+		if currentState.numMyFinger > 0 && isMyTurn {
 			currentState.numMyFinger -= 1
 		}
-		if currentState.numNpcFinger > 0 and !isMyTurn{
+		if currentState.numNpcFinger > 0 && !isMyTurn{
 			currentState.numNpcFinger -= 1
 		}
 		if currentState.numMyFinger == 0 || currentState.numNpcFinger == 0 {

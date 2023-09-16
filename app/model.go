@@ -31,9 +31,11 @@ type GameState struct {
 	usedMySkill		bool
 	npcSkill		string
 	npcSkillDesc    string
-	usedNpcSkill	bool 
+	usedNpcSkill	bool
+	activeInk		bool
+	numMyMaxFinger  int
+	numNpcMaxFinger int
 }
-
 
 // app/db.go (新しく作成するファイルもしくはapp内の適当なファイルに追加)
 
