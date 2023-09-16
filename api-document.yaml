@@ -3,49 +3,93 @@ info:
   title: Yubisuma API
   description: |-
     <b>Yubisuma API仕様</b><br>
-  Yubisumaに関するAPI
+    Yubisumaに関するAPI
   version: 1.0.0
 servers:
   - url: http://localhost:8080/
 tags:
   - name: user
     description: ユーザ関連API
+  - name: animals
+    description: 動物関連API
+  - name: action
+    description: アクション関連API
+
 paths:
-  /user/create:
-    post:
+  /user/create: ... # 既存の/user/createの詳細は省略しています
+
+  /animals:
+    get:
       tags:
-        - user
-      summary: ユーザ情報作成API
-      description: |
-        ユーザ情報を作成します。<br>
-        ユーザの名前情報をリクエストで受け取り、ユーザIDと認証用のトークンを生成しデータベースへ保存します。<br>
-        tokenは以降の他のAPIコール時にヘッダに設定をします。
-      requestBody:
-        description: Request Body
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/UserCreateRequest"
-        required: true
+        - animals
+      summary: 動物一覧取得
       responses:
         200:
           description: A successful response.
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/UserCreateResponse"
-      x-codegen-request-body-name: body
+                type: object
+                properties:
+                  animals:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Animal"
+
+  /my-animal:
+    post:
+      tags:
+        - animals
+      summary: 自分の動物選択
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Animal"
+        required: true
+      responses:
+        200:
+          description: Successfully selected the animal.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AnimalResponse"
+
+  /action:
+    post:
+      tags:
+        - action
+      summary: アクションの選択、表示
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Action"
+        required: true
+      responses:
+        200:
+          description: Successfully performed the action.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ActionResponse"
+
 components:
   schemas:
-    UserCreateRequest:
+    Animal: ... # Animalの詳細は省略しています
+
+    Action: ... # Actionの詳細は省略しています
+
+    AnimalResponse:
       type: object
       properties:
-        name:
+        message:
           type: string
-          description: ユーザ名
-    UserCreateResponse:
+          description: 処理結果のメッセージ
+
+    ActionResponse:
       type: object
       properties:
-        token:
+        message:
           type: string
-          description: クライアント側で保存するトークン
+          description: 処理結果のメッセージ
