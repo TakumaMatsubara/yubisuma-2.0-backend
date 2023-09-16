@@ -8,5 +8,6 @@
     "npcSkill": "さいみんじゅつ",
     "npcSkillDesc": "あいてを せんのうして つぎの あいての たてるゆびを いっぽんに しちゃうぞ！",
     "usedMySkill": false,
-    "usedNpcSkill": false
+    "usedNpcSkill": false,
+    "activeInk": false
 }

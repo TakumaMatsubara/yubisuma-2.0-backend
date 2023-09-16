@@ -73,7 +73,8 @@ func UpdateGameState(numExpectedFinger int, useSkill bool, isMyTurn bool, numMyU
 			currentState.numNpcFinger += 1
 		}
 		else if mySkill == "すみをはく" {
-			isInk = true
+			currentState.activeInk = true
+		}
 		currentState.usedMySkill = true
 	}
 
@@ -86,6 +87,9 @@ func UpdateGameState(numExpectedFinger int, useSkill bool, isMyTurn bool, numMyU
 		}
 		else if npcSkill == "さいみんじゅつ" {
 			numMyUpFinger = 1
+		}
+		else if npcSkill == "すみをはく" {
+			currentState.activeInk = true
 		}
 		currentState.usedNpcSkill = true
 	}
@@ -122,6 +126,7 @@ func UpdateGameState(numExpectedFinger int, useSkill bool, isMyTurn bool, numMyU
 	result["numNpcUpFinger"] = numNpcUpFinger
 	result["numExpectedFinger"] = numExpectedFinger
 	result["usedMySkill"] = currentState.usedMySkill
+	result["activeInk"] = currentState.activeInk
 	
 	return result, nil
 }
