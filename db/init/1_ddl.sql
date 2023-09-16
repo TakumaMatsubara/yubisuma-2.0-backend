@@ -10,7 +10,7 @@ SET
 
 CREATE SCHEMA IF NOT EXISTS `yubisuma_api` DEFAULT CHARACTER SET utf8mb4;
 
-USE `yubisuma_api `;
+USE `yubisuma_api`;
 
 SET CHARSET utf8mb4;
 
@@ -22,11 +22,10 @@ CREATE TABLE
         `name` VARCHAR(64) NOT NULL COMMENT '動物名',
         `numFinger` INT NOT NULL COMMENT '指の数',
         `skill` VARCHAR(64) NOT NULL COMMENT 'スキル',
+        `skillDesc` VARCHAR(512) NOT NULL COMMENT 'スキル', 
         `handUrl` VARCHAR(256) NOT NULL COMMENT '手の画像URL',
         `upFingerUrl` VARCHAR(256) NOT NULL COMMENT '上向きの指の画像URL',
         `downFingerUrl` VARCHAR(256) NOT NULL COMMENT '下向きの指の画像URL',
-        `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
         PRIMARY KEY (`id`)
     ) ENGINE = InnoDB COMMENT = '動物';
 
