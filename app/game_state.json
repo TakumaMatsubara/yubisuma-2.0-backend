@@ -1,0 +1,13 @@
+{
+    "numMyFinger": 2,
+    "numNpcFinger": 5,
+    "numMyMaxFinger": 2,
+    "numNpcMaxFinger": 5,
+    "mySkill": "ほうこう",
+    "mySkillDesc": "びっくりさせて あいての じょがいしていた ゆびを いっぽん ふっかつさせるぞ！",
+    "npcSkill": "さいみんじゅつ",
+    "npcSkillDesc": "あいてを せんのうして つぎの あいての たてるゆびを いっぽんに しちゃうぞ！",
+    "usedMySkill": false,
+    "usedNpcSkill": false,
+    "activeInk": false
+}

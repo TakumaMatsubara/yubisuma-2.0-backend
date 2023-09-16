@@ -2,8 +2,8 @@ package app
 
 import (
 	"net/http"
-
 	"github.com/labstack/echo/v4"
+	"encoding/json"
 )
 
 // HandleAnimalsGet handles the GET request for all animals
@@ -83,13 +83,28 @@ func HandleAction() echo.HandlerFunc {
 		if err := c.Bind(&req); err != nil {
 			return c.JSON(http.StatusBadRequest, map[string]string{"error": "Invalid request format"})
 		}
-		resp := actionResponse{IsFinished: false, // 実際のロジックに基づいて更新
-			IsMyTurn:          req.IsMyTurn,          // ターンを切り替える
-			NumMyFinger:       req.NumMyUpFinger,     // 仮の値
-			NumNpcFinger:      5,                     // 仮の値
-			NumMyUpFinger:     req.NumMyUpFinger,     // リクエストからの値
-			NumNpcUpFinger:    3,                     // 仮の値
-			NumExpectedFinger: req.NumExpectedFinger, // リクエストからの値
+		// resp := actionResponse{IsFinished: false, // 実際のロジックに基づいて更新
+		// 	IsMyTurn:          req.IsMyTurn,          // ターンを切り替える
+		// 	NumMyFinger:       req.NumMyUpFinger,     // 仮の値
+		// 	NumNpcFinger:      5,                     // 仮の値
+		// 	NumMyUpFinger:     req.NumMyUpFinger,     // リクエストからの値
+		// 	NumNpcUpFinger:    3,                     // 仮の値
+		// 	NumExpectedFinger: req.NumExpectedFinger, // リクエストからの値
+		// }
+
+		// 必要なパラメータをリクエストボディから抽出する
+		numExpectedFinger, ok1 := requestBody["numExpectedFinger"].(int)
+		useSkill, ok2 := requestBody["useSkill"].(bool)
+		isMyTurn, ok3 := requestBody["isMyTurn"].(bool)
+		numUpMyFinger, ok4 := requestBody["numUpMyFinger"].(int)
+		if !ok1 || !ok2 || !ok3 || !ok4 {
+			return c.JSON(http.StatusBadRequest, map[string]string{"error": "Missing or invalid parameters"})
+		}
+		
+		// logic.goのUpdateGameState関数を呼び出す
+		result, err := UpdateGameState(numExpectedFinger, useSkill, isMyTurn, numUpMyFinger)
+		if err != nil {
+			return c.JSON(http.StatusInternalServerError, map[string]string{"error": err.Error()})
 		}
 
 		// レスポンスをJSONとして返す
