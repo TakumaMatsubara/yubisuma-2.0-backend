@@ -2,8 +2,8 @@ package app
 
 import (
 	"net/http"
+
 	"github.com/labstack/echo/v4"
-	"encoding/json"
 )
 
 // HandleAnimalsGet handles the GET request for all animals
@@ -93,21 +93,26 @@ func HandleAction() echo.HandlerFunc {
 		// }
 
 		// 必要なパラメータをリクエストボディから抽出する
-		numExpectedFinger, ok1 := requestBody["numExpectedFinger"].(int)
-		useSkill, ok2 := requestBody["useSkill"].(bool)
-		isMyTurn, ok3 := requestBody["isMyTurn"].(bool)
-		numUpMyFinger, ok4 := requestBody["numUpMyFinger"].(int)
-		if !ok1 || !ok2 || !ok3 || !ok4 {
-			return c.JSON(http.StatusBadRequest, map[string]string{"error": "Missing or invalid parameters"})
-		}
-		
+		// numExpectedFinger, ok1 := requestBody["numExpectedFinger"].(int)
+		// useSkill, ok2 := requestBody["useSkill"].(bool)
+		// isMyTurn, ok3 := requestBody["isMyTurn"].(bool)
+		// numUpMyFinger, ok4 := requestBody["numUpMyFinger"].(int)
+		// if !ok1 || !ok2 || !ok3 || !ok4 {
+		// 	return c.JSON(http.StatusBadRequest, map[string]string{"error": "Missing or invalid parameters"})
+		// }
+		numExpectedFinger := req.NumExpectedFinger
+		useSkill := req.UseSkill
+		isMyTurn := req.IsMyTurn
+		numUpMyFinger := req.NumMyUpFinger
+
 		// logic.goのUpdateGameState関数を呼び出す
-		result, err := UpdateGameState(numExpectedFinger, useSkill, isMyTurn, numUpMyFinger)
+		result, err := UpdateGameState(*numExpectedFinger, useSkill, isMyTurn, numUpMyFinger)
 		if err != nil {
 			return c.JSON(http.StatusInternalServerError, map[string]string{"error": err.Error()})
 		}
 
 		// レスポンスをJSONとして返す
-		return c.JSON(http.StatusOK, resp)
+		// return c.JSON(http.StatusOK, resp)
+		return c.JSON(http.StatusOK, result)
 	}
 }

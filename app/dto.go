@@ -51,4 +51,6 @@ type actionResponse struct {
 	NumMyUpFinger     int  `json:"numMyUpFinger"`
 	NumNpcUpFinger    int  `json:"numNpcUpFinger"`
 	NumExpectedFinger *int `json:"numExpectedFinger"`
+	UsedMySkill       bool `json:"usedMySkill"`
+	ActiveInk         bool `json:"activeInk"`
 }
