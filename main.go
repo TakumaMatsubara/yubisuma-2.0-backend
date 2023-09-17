@@ -23,8 +23,10 @@ func init() {
 func main() {
 	// dbの初期化
 	app.InitDB()
+
 	// echoの処理
 	e := echo.New()
+
 	// panicが発生した時の処理
 	e.Use(echomiddleware.Recover())
 	// CORS周りの設定
@@ -34,6 +36,7 @@ func main() {
 		AllowMethods: echomiddleware.DefaultCORSConfig.AllowMethods,
 		AllowHeaders: echomiddleware.DefaultCORSConfig.AllowHeaders,
 	}))
+	e.Static("/static", "static")
 
 	e.GET("/animals", app.HandleAnimalsGet())
 	e.POST("/animal", app.HandleAnimalPost())
