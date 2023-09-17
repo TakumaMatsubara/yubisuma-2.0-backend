@@ -22,3 +22,4 @@ COPY . .
 
 # # アプリケーションを実行します
 # CMD ["./main"]
+CMD ["go", "run", "main.go"]
