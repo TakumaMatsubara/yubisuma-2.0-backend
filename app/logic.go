@@ -2,7 +2,6 @@ package app
 
 import (
 	"encoding/json"
-	"fmt"
 	"math/rand"
 	"os"
 	"time"
@@ -25,6 +24,7 @@ func LoadGameState(filePath string) (GameState, error) {
 	decoder := json.NewDecoder(file)
 	err = decoder.Decode(&state)
 	if err != nil {
+
 		return state, err
 	}
 
@@ -58,36 +58,36 @@ func UpdateGameState(numExpectedFinger int, useSkill bool, isMyTurn bool, numMyU
 
 	// resultにレスポンスとして返す値を格納する
 	result := make(map[string]interface{})
-	fmt.Println("ここだよ", currentState.numNpcFinger)
+
 	// NPCのターン: 残りの指の数から、ランダムに指の数を決定する。skillを使う場合は、skillの情報をcurrentStateから取得する
-	numNpcUpFinger := rand.Intn(currentState.numNpcFinger) + 1
+	numNpcUpFinger := rand.Intn(currentState.NumNpcFinger) + 1
 
 	// skillを使う場合は、skillの情報をcurrentStateから取得する
 	mySkill := ""
-	if useSkill && !currentState.usedMySkill {
-		mySkill = currentState.mySkill
+	if useSkill && !currentState.UsedMySkill {
+		mySkill = currentState.MySkill
 		if mySkill == "さいみんじゅつ" {
 			numNpcUpFinger = 1
-		} else if mySkill == "ほうこう" && currentState.numNpcFinger < currentState.numNpcMaxFinger {
-			currentState.numNpcFinger += 1
+		} else if mySkill == "ほうこう" && currentState.NumNpcFinger < currentState.NumNpcMaxFinger {
+			currentState.NumNpcFinger += 1
 		} else if mySkill == "すみをはく" {
-			currentState.activeInk = true
+			currentState.ActiveInk = true
 		}
-		currentState.usedMySkill = true
+		currentState.UsedMySkill = true
 	}
 
 	npcSkill := ""
 	useNpcSkill := rand.Intn(2) == 0
-	if useNpcSkill && !currentState.usedNpcSkill {
-		npcSkill = currentState.npcSkill
-		if npcSkill == "ほうこう" && currentState.numMyFinger < currentState.numMyMaxFinger {
-			currentState.numMyFinger += 1
+	if useNpcSkill && !currentState.UsedNpcSkill {
+		npcSkill = currentState.NpcSkill
+		if npcSkill == "ほうこう" && currentState.NumMyFinger < currentState.NumMyMaxFinger {
+			currentState.NumMyFinger += 1
 		} else if npcSkill == "さいみんじゅつ" {
 			numMyUpFinger = 1
 		} else if npcSkill == "すみをはく" {
-			currentState.activeInk = true
+			currentState.ActiveInk = true
 		}
-		currentState.usedNpcSkill = true
+		currentState.UsedNpcSkill = true
 	}
 
 	totalFingers := numMyUpFinger + numNpcUpFinger
@@ -96,13 +96,13 @@ func UpdateGameState(numExpectedFinger int, useSkill bool, isMyTurn bool, numMyU
 	isFinished := false
 	if numExpectedFinger == totalFingers {
 		// 指の数を減らし、ゲームが終了したかどうかを判定する
-		if currentState.numMyFinger > 0 && isMyTurn {
-			currentState.numMyFinger -= 1
+		if currentState.NumMyFinger > 0 && isMyTurn {
+			currentState.NumMyFinger -= 1
 		}
-		if currentState.numNpcFinger > 0 && !isMyTurn {
-			currentState.numNpcFinger -= 1
+		if currentState.NumNpcFinger > 0 && !isMyTurn {
+			currentState.NumNpcFinger -= 1
 		}
-		if currentState.numMyFinger == 0 || currentState.numNpcFinger == 0 {
+		if currentState.NumMyFinger == 0 || currentState.NumNpcFinger == 0 {
 			isFinished = true
 		}
 	}
@@ -116,13 +116,13 @@ func UpdateGameState(numExpectedFinger int, useSkill bool, isMyTurn bool, numMyU
 	// resultにレスポンスとして返す値を格納する
 	result["isFinished"] = isFinished
 	result["isMyTurn"] = isMyTurn
-	result["numMyFinger"] = currentState.numMyFinger
-	result["numNpcFinger"] = currentState.numNpcFinger
+	result["numMyFinger"] = currentState.NumMyFinger
+	result["numNpcFinger"] = currentState.NumNpcFinger
 	result["numMyUpFinger"] = numMyUpFinger
 	result["numNpcUpFinger"] = numNpcUpFinger
 	result["numExpectedFinger"] = numExpectedFinger
-	result["usedMySkill"] = currentState.usedMySkill
-	result["activeInk"] = currentState.activeInk
+	result["usedMySkill"] = currentState.UsedMySkill
+	result["activeInk"] = currentState.ActiveInk
 
 	return result, nil
 }

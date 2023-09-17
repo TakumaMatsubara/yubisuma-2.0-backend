@@ -23,17 +23,16 @@ type Animal struct {
 
 // GameState holds the state of the Yubisuma game
 type GameState struct {
-	numMyFinger     int
-	numNpcFinger    int
-	mySkill         string
-	mySkillDesc     string
-	usedMySkill     bool
-	npcSkill        string
-	npcSkillDesc    string
-	usedNpcSkill    bool
-	activeInk       bool
-	numMyMaxFinger  int
-	numNpcMaxFinger int
+	NumMyFinger     int    `json:"numMyFinger"`
+	NumNpcFinger    int    `json:"numNpcFinger"`
+	MySkill         string `json:"mySkill"`
+	UsedMySkill     bool   `json:"usedMySkill"`
+	NpcSkill        string `json:"npcSkill"`
+	NpcSkillDesc    string `json:"npcSkillDesc"`
+	UsedNpcSkill    bool   `json:"usedNpcSkill"`
+	ActiveInk       bool   `json:"activeInk"`
+	NumMyMaxFinger  int    `json:"numMyMaxFinger"`
+	NumNpcMaxFinger int    `json:"numNpcMaxFinger"`
 }
 
 // app/db.go (新しく作成するファイルもしくはapp内の適当なファイルに追加)
