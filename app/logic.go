@@ -108,7 +108,7 @@ func UpdateGameState(numExpectedFinger int, useSkill bool, isMyTurn bool, numMyU
 	}
 
 	// local fileに更新されたゲームの状態を保存する
-	err = SaveGameState(currentState, "game_state.json")
+	err = SaveGameState(currentState, "app/game_state.json")
 	if err != nil {
 		return nil, err
 	}
