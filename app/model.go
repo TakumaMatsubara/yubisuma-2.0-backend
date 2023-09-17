@@ -21,18 +21,17 @@ type Animal struct {
 	DownFingerUrl string
 }
 
-
 // GameState holds the state of the Yubisuma game
 type GameState struct {
-	numMyFinger 	int    
+	numMyFinger     int
 	numNpcFinger    int
-	mySkill   		string
-	mySkillDesc		string
-	usedMySkill		bool
-	npcSkill		string
+	mySkill         string
+	mySkillDesc     string
+	usedMySkill     bool
+	npcSkill        string
 	npcSkillDesc    string
-	usedNpcSkill	bool
-	activeInk		bool
+	usedNpcSkill    bool
+	activeInk       bool
 	numMyMaxFinger  int
 	numNpcMaxFinger int
 }
@@ -52,20 +51,13 @@ func InitDB() {
 	port := os.Getenv("SQL_PORT")
 	database := os.Getenv("SQL_DATABASE")
 
+	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local", user, password, host, port, database)
 	var err error
-
-	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s", user, password, host, port, database)
 	db, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
-		log.Fatalf("can't connect to mysql server. "+
-			"SQL_USER=%s, "+
-			"SQL_PASSWORD=%s, "+
-			"SQL_HOST=%s, "+
-			"SQL_PORT=%s, "+
-			"SQL_DATABASE=%s, "+
-			"error=%+v",
-			user, password, host, port, database, err)
+		log.Fatalf("Unable to connect to the database: %v", err)
 	}
+
 }
 
 func GetAnimals() ([]Animal, error) {
